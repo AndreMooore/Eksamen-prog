@@ -40,7 +40,9 @@
       <div id="memory">
         <p>Memory (<span id="memory-bank">0</span>)</p>
         <button id="memory-add" onclick="addMemory()">Add</button>
-        <button id="memory-browseback" disabled>Previous</button>
+        <button id="memory-browseback" onclick="previousMemory">
+          Previous
+        </button>
         <button id="memory-browseforward" disabled>Next</button>
       </div>
     </article>
@@ -64,9 +66,15 @@
       //document.getElementById("calculation").value = result; Her oppdateres verdien av input id "calculation" til å være lik evalueringen.
       //return result holder på resultat av regnestykket slik at hvis vi kaller på funkjsonen senere, så vil den vise utregningen.
 
+      let memoryHistory = [];
+      let lastMemory = 0;
+
       function addMemory() {
-        let calculatedResult = solve();
-        document.getElementById("memory-bank").innerHTML++;
+        let calculation = document.getElementById("calculation").value;
+        let result = eval(calculation);
+        memoryHistory.push(result);
+        document.getElementById("memory-bank").innerHTML = memoryHistory.length;
+        console.log(result);
       }
 
       function clearScreen() {
