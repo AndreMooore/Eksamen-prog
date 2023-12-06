@@ -20,7 +20,7 @@
         </nav>
         <h2 id="listHeader">Showing all Staff</h2>
         <div id="staffList">
-          <!-- <article class="membercard" id="staffmember-0">
+          <article class="membercard" id="staffmember-0">
             <h3>Etternavn, fornavn</h3>
             <p class="metainfo">
               <img src="posicon.png" alt="position: " /> Position
@@ -30,8 +30,8 @@
               <a href="mailto:epost@hotmail.com"
                 ><img src="mailicon.png" /> Send mail to fornavn</a
               >
-            </p>  -->
-          <!-- </article> -->
+            </p>
+          </article>
         </div>
       </section>
       <section id="admin">
@@ -110,7 +110,7 @@
           email: "bill@gates.net",
         },
         {
-          firstname: "dylan",
+          firstname: "Dylan",
           lastname: "Gates",
           position: "Director",
           department: "Administration",
@@ -118,10 +118,14 @@
         },
       ];
 
-      let printout = "";
+      function showStaff() {
+        let printout = "";
+        //Lager en tom variabel for å holde på verdiene.
 
-      staff.map((people) => {
-        printout += `<article class="membercard" id="staffmember-${people.firstname}">
+        //Bruker map til å gå gjennom alle ansatte i staff arrayet.
+        staff.map((people) => {
+          //For hver person i arrayet, så lager jeg en HTML artikkel med all info de legger.
+          printout += `<article class="membercard" id="staffmember-${people.firstname}">
             <h3>${people.lastname}, ${people.firstname}</h3>
             <p class="metainfo">
               <img src="posicon.png" alt="position: " /> ${people.position}
@@ -131,8 +135,43 @@
               <a href="mailto:${people.email}"
                 ><img src="mailicon.png" /> Send mail to ${people.firstname}</a>
             </p></article>`;
-      });
-      document.getElementById("staffList").innerHTML = printout;
+        });
+
+        //Skriver ut verdiene til html elementet med id "staffList"
+        document.getElementById("staffList").innerHTML = printout;
+      }
+
+      function addStaff() {
+        //Lager variabler som holder på verdiene fra innskrevet tekst i skjemaet.
+        let firstname = document.getElementById("firstname").value;
+        let lastname = document.getElementById("lastname").value;
+        let position = document.getElementById("position").value;
+        let department = document.getElementById("department").value;
+        let email = document.getElementById("email").value;
+
+        //Pusher inn verdiene som er skrevet i skjemaet, inn i arrayet "staff".
+        staff.push({
+          firstname,
+          lastname,
+          position,
+          department,
+          email,
+        });
+
+        //Resetter input feltene i skjemaet etter at det er trykket "lagre"
+        document.getElementById("firstname").value = "";
+        document.getElementById("lastname").value = "";
+        document.getElementById("position").value = "";
+        document.getElementById("department").value = "";
+        document.getElementById("email").value = "";
+
+        showStaff();
+      }
+      //Setter på en eventlistener for museklikk på "saveStaff", som gjør at den kjører funksjonen "addStaff"
+      document.getElementById("saveStaff").addEventListener("click", addStaff);
+
+      showStaff();
+
       //Array of available positions
       const positions = [
         "Director",
@@ -142,6 +181,18 @@
         "Designer",
       ];
 
+      function showPositions() {
+        const selectElement = document.getElementById("position");
+
+        positions.map((position) => {
+          let option = document.createElement("option");
+          option.text = position;
+          option.value = position;
+          selectElement.add(option);
+        });
+      }
+
+      showPositions();
       //Array of available departments
       const departments = [
         "Administration",

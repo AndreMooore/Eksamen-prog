@@ -49,9 +49,22 @@
         const x = Math.floor(Math.random() * (canvas.width - 13));
         const y = Math.floor(Math.random() * (canvas.height - 13));
         elements.push({ type: type, x: x, y: y });
+
+        //Fikk litt hjelp av bingAI på elements.push typene.
       }
 
+      //Tar inn parameteren "type", så lager den en tilfeldig x og y posisjon, minus 13 pixler siden sirkelen er 13 pixler lang.
+      //Så legger den til ett nytt objekt i "elements" variabelen med egenskapene "type, x og y". Type og hvor den skal plasseres på lerretet.
+
       //TODO: Function to remove random element:
+      function removeElement() {
+        if (elements.length > 0) {
+          const index = Math.floor(Math.random() * elements.length);
+          elements.splice(index, 1);
+        }
+      }
+
+      //Funksjonen ser om antall elementer er mer enn null, hvis den er det så fjernes et tilfelig element med splice.
 
       //TODO: EventListeners to track user input:
       document.getElementById("sbutton").addEventListener("click", function () {
@@ -62,18 +75,52 @@
         addElement("circle");
       });
 
+      document.getElementById("rbutton").addEventListener("click", function () {
+        removeElement();
+        updateCounts();
+      });
+
       document.addEventListener("keydown", function (event) {
         if (event.key === "s") {
           addElement("square");
+          updateCounts();
         }
       });
 
       document.addEventListener("keydown", function (event) {
         if (event.key === "c") {
           addElement("circle");
+          updateCounts();
         }
       });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "r") {
+          removeElement();
+          updateCounts();
+        }
+      });
+
+      //bruker addEventListener for å se om "keydown" eller "click" gjøres. Gjøres en av disse, så adder den det elementet og kjører updateCounts for å oppdatere
       //TODO: Count the element types and total and print to interface
+      function updateCounts() {
+        let squareCount = 0;
+        let circleCount = 0;
+
+        elements.forEach(function (element) {
+          if (element.type === "square") {
+            squareCount++;
+          } else if (element.type === "circle") {
+            circleCount++;
+          }
+        });
+
+        console.log("Updating Counts");
+
+        document.getElementById("squareCount").textContent = squareCount;
+        document.getElementById("circleCount").textContent = circleCount;
+        document.getElementById("totalCount").textContent = elements.length;
+      }
 
       //Function to draw on canvas:
       function renderDrawings() {
@@ -81,13 +128,14 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         //TODO: Draw the elements on canvas:
+
         elements.forEach(function (element) {
           if (element.type === "square") {
             ctx.fillStyle = "blue";
             ctx.fillRect(element.x, element.y, 8, 8);
           } else if (element.type === "circle") {
             ctx.beginPath();
-            ctx.arc(element.x, element.y, 13, 0, 2 * Math.PI, false);
+            ctx.arc(element.x, element.y, 13, 0, 2 * Math.PI);
             ctx.fillStyle = "gold";
             ctx.fill();
           }
