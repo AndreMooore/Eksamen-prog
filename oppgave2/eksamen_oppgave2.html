@@ -130,14 +130,21 @@
 
         //TODO: Draw the elements on canvas:
 
+        //Går gjennom hvert element i arrayet "elements"
         elements.forEach(function (element) {
+          //Hvis element typen er en firkant, sett fargen til blå og tegn en firkant ved å spesifisere x og y, samt høyde og bredde i pixler
           if (element.type === "square") {
             ctx.fillStyle = "blue";
             ctx.fillRect(element.x, element.y, 8, 8);
+            //Hvis elementet er en sirkel.
           } else if (element.type === "circle") {
+            //Starter en ny sti
             ctx.beginPath();
+            // Tegner en sirkel på canvas ved å spesifisere "x, y", radius (13), startvinkel (0) og sluttvinkel (2 * Math.PI)
             ctx.arc(element.x, element.y, 13, 0, 2 * Math.PI);
+            //Setter fargen til gull
             ctx.fillStyle = "gold";
+            //Fyller sirkelen med gull.
             ctx.fill();
           }
         });
