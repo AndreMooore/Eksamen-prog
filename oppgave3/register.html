@@ -95,7 +95,9 @@
               id="newDepartment"
               placeholder="Department" />
           </p>
-          <button id="saveDepartment">Save new department</button>
+          <button id="saveDepartment" onClick="newDepartment()">
+            Save new department
+          </button>
         </div>
       </section>
     </main>
@@ -119,8 +121,10 @@
       ];
 
       function showStaff() {
-        let printout = "";
         //Lager en tom variabel for å holde på verdiene.
+        let printout = "";
+        //Denne fant jeg ikke noe stoff på, så spurte bingAI. linje 127
+        staff.sort((a, b) => a.lastname.localeCompare(b.lastname));
 
         //Bruker map til å gå gjennom alle ansatte i staff arrayet.
         staff.map((people) => {
@@ -182,17 +186,41 @@
       ];
 
       function showPositions() {
+        //lager en variabel som inneholder informasjone fra id="position"
         const selectElement = document.getElementById("position");
-
-        positions.map((position) => {
+        //Fjerner eksisterende valg.
+        selectElement.innerHTML = "";
+        //Går gjennom hvert element i positions arrayet.
+        positions.sort().map((position) => {
+          //Lager et nytt option element
           let option = document.createElement("option");
+          //Setter teksten for option elementet til verdien av position.
           option.text = position;
+          //Setter verdien av option til til verdien av position.
           option.value = position;
+          //Legger til det nye option elementet til selectElement.
           selectElement.add(option);
         });
       }
 
+      //Jeg bruke bingAI litt til å få positions arrayet til å vises i menyen. Alt fra positions.map((position)) => { og ned. linje 190-196
+
       showPositions();
+
+      function newPosition() {
+        let position = document.getElementById("newPosition").value;
+
+        positions.push(position);
+
+        document.getElementById("newPosition").value = "";
+
+        showPositions();
+      }
+
+      document
+        .getElementById("savePosition")
+        .addEventListener("click", newPosition);
+
       //Array of available departments
       const departments = [
         "Administration",
@@ -200,6 +228,40 @@
         "Production",
         "Finances",
       ];
+
+      function showDepart() {
+        //lager en variabel som inneholder informasjone fra id="department"
+        const selectElement = document.getElementById("department");
+        //Fjerner eksisterende valg.
+        selectElement.innerHTML = "";
+        //Går gjennom hvert element i positions arrayet.
+        departments.sort().map((department) => {
+          //Lager et nytt option element
+          let option = document.createElement("option");
+          //Setter teksten for option elementet til verdien av department.
+          option.text = department;
+          //Setter verdien av option til til verdien av department.
+          option.value = department;
+          //Legger til det nye option elementet til selectElement.
+          selectElement.add(option);
+        });
+      }
+
+      showDepart();
+
+      function newDepartment() {
+        let department = document.getElementById("newDepartment").value;
+
+        departments.push(department);
+
+        document.getElementById("newDepartment").value = "";
+
+        showDepart();
+      }
+
+      document
+        .getElementById("saveDepartment")
+        .addEventListener("click", newDepartment);
     </script>
   </body>
 </html>

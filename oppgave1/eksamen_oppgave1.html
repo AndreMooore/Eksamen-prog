@@ -54,46 +54,61 @@
       }
 
       function solve() {
+        //let calculation henter verdien fra id="calculation" og lagrer den i variabelen calculation.
         let calculation = document.getElementById("calculation").value;
+        //let let result = eval(calculation) bruker "eval" funkjsonen til å evalurere regnestykket vi har skrevet inn, så lagres resultatet i variabelen "result"
         let result = eval(calculation);
+        //document.getElementById("calculation").value = result; Her oppdateres verdien av input id "calculation" til å være lik evalueringen.
         document.getElementById("calculation").value = result;
+        //return result holder på resultat av regnestykket slik at hvis vi kaller på funkjsonen senere, så vil den vise utregningen.
         return result;
       }
 
-      //Solve funksjonen fungerer slik:
-      //let calculation henter verdien fra id="calculation" og lagrer den i variabelen calculation.
-      //let let result = eval(calculation) bruker "eval" funkjsonen til å evalurere regnestykket vi har skrevet inn, så lagres resultatet i variabelen "result"
-      //document.getElementById("calculation").value = result; Her oppdateres verdien av input id "calculation" til å være lik evalueringen.
-      //return result holder på resultat av regnestykket slik at hvis vi kaller på funkjsonen senere, så vil den vise utregningen.
-
+      //Lager en tom array som kalles "memoryHistory"
       let memoryHistory = [];
+      //currentMemoryIndex er lik memoryhistory.length
       let currentMemoryIndex = memoryHistory.length;
 
       function addMemory() {
+        //Henter verdien fra html id "calculation"
         let calculation = document.getElementById("calculation").value;
+        //Evalurer regnestykket og lagrer resultatet i "result"
         let result = eval(calculation);
+        //Legger til resultatet i memoryhistory.
         memoryHistory.push(result);
+        //Oppdaterer currentmemoryindex til å være lik memoryhistory.length - 1, for å få tak i det siste elementet.
         currentMemoryIndex = memoryHistory.length - 1;
+        // Oppdaterer tekstinnholdet i HTML-elementet med ID "memory-bank" med "currentMemoryIndex + 1"
         document.getElementById("memory-bank").innerHTML =
           currentMemoryIndex + 1;
         console.log(result);
       }
 
       function previousMemory() {
+        //Sjekker om currentmemoryindex er større enn null
         if (currentMemoryIndex > 0) {
+          //Hvis den er det, fjern 1 fra den.
           currentMemoryIndex--;
+          // Henter det forrige resultatet fra "memoryHistory" ved hjelp av "currentMemoryIndex"
           let previousResult = memoryHistory[currentMemoryIndex];
+          // Setter verdien til HTML-elementet med ID "calculation" til det forrige resultatet
           document.getElementById("calculation").value = previousResult;
+          // Oppdaterer tekstinnholdet i HTML-elementet med ID "memory-bank" med "currentMemoryIndex + 1"
           document.getElementById("memory-bank").innerHTML =
             currentMemoryIndex + 1;
         }
       }
 
       function nextMemory() {
+        //Hvis currentmemorindex er mindre enn memoryhistorylengths siste index
         if (currentMemoryIndex < memoryHistory.length - 1) {
+          //Så settes det på 1 på currentmemoryindex
           currentMemoryIndex++;
+          // Henter det neste resultatet fra "memoryHistory" ved hjelp av "currentMemoryIndex"
           let nextResult = memoryHistory[currentMemoryIndex];
+          // Setter verdien til HTML-elementet med ID "calculation" til det neste resultatet
           document.getElementById("calculation").value = nextResult;
+          // Oppdaterer tekstinnholdet i HTML-elementet med ID "memory-bank" med "currentMemoryIndex + 1"
           document.getElementById("memory-bank").innerHTML =
             currentMemoryIndex + 1;
         }

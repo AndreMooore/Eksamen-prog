@@ -103,10 +103,11 @@
 
       //bruker addEventListener for å se om "keydown" eller "click" gjøres. Gjøres en av disse, så adder den det elementet og kjører updateCounts for å oppdatere
       //TODO: Count the element types and total and print to interface
+      //Definerer squarecount og circlecount
       function updateCounts() {
         let squareCount = 0;
         let circleCount = 0;
-
+        //Bruker forEach element til å se om element typen er firkant eller sirkel. Hvis sirkel, pluss på 1 på circlecount og vice versa.
         elements.forEach(function (element) {
           if (element.type === "square") {
             squareCount++;
@@ -116,7 +117,7 @@
         });
 
         console.log("Updating Counts");
-
+        // Oppdaterer tekstinnholdet i HTML-elementene med IDene "squareCount", "circleCount" og "totalCount" med de respektive tellerverdiene
         document.getElementById("squareCount").textContent = squareCount;
         document.getElementById("circleCount").textContent = circleCount;
         document.getElementById("totalCount").textContent = elements.length;
